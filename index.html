@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Share Location</title>
+</head>
+
+<body style="font-family:Arial;text-align:center;padding:40px">
+
+<h2>Share Your Location</h2>
+
+<p>
+Your location will only be shared after you press the button
+and allow location permission.
+</p>
+
+<button onclick="shareLocation()"
+style="padding:15px 25px;font-size:17px;">
+Share My Location
+</button>
+
+<p id="status"></p>
+
+<script>
+function shareLocation() {
+
+  const status = document.getElementById("status");
+
+  if (!navigator.geolocation) {
+    status.innerText = "Location is not supported.";
+    return;
+  }
+
+  status.innerText = "Requesting location...";
+
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      status.innerHTML =
+        "Location received.<br><br>" +
+        "<a href='https://www.google.com/maps?q=" +
+        lat + "," + lon +
+        "' target='_blank'>Open Location on Google Maps</a>";
+    },
+
+    function() {
+      status.innerText =
+        "Location permission was denied.";
+    }
+  );
+}
+</script>
+
+</body>
+</html>
